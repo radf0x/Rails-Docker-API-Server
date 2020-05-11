@@ -1,0 +1,1 @@
+This is a example rails api application for my blog posts.

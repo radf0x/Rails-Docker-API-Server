@@ -1,0 +1,31 @@
+version: '3'
+services:
+  db:
+    image: postgres:alpine
+    container_name: db
+    volumes: 
+      - ./minimal-rails-app/data/db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=secret
+    ports:
+      - "5432:5432"
+    networks:
+      - backend
+  web:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: web
+    volumes:
+      - .:/app
+    ports:
+      - "80:3000"
+    depends_on: 
+      - db
+    networks:
+      - backend
+    stdin_open: true
+    tty: true
+
+networks:
+  backend:
